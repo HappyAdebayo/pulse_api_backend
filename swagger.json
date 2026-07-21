@@ -1,0 +1,645 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "pulse_api",
+    "version": "1.0.0",
+    "description": "Auto-generated API Documentation"
+  },
+  "servers": [],
+  "paths": {
+    "/workspace/{tokenid}/reject": {
+      "post": {
+        "summary": "POST reject_invitation",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [
+          {
+            "name": "tokenid",
+            "in": "path",
+            "required": true,
+            "description": "Path parameter: tokenid",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/workspace/": {
+      "get": {
+        "summary": "GET index",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Workspaces"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "POST store",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/{id}": {
+      "delete": {
+        "summary": "DELETE delete_workspace",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Path parameter: id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/workspace/{tokenid}/accept": {
+      "post": {
+        "summary": "POST accept_invitation",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [
+          {
+            "name": "tokenid",
+            "in": "path",
+            "required": true,
+            "description": "Path parameter: tokenid",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/workspace/{workspaceid}/transfer-ownership": {
+      "put": {
+        "summary": "PUT transfer_ownership",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceid",
+            "in": "path",
+            "required": true,
+            "description": "Path parameter: workspaceid",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspace/{workspaceid}/members": {
+      "put": {
+        "summary": "PUT create_invitation",
+        "tags": [
+          "Workspace"
+        ],
+        "parameters": [
+          {
+            "name": "workspaceid",
+            "in": "path",
+            "required": true,
+            "description": "Path parameter: workspaceid",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "role"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "POST refresh",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "refresh_token"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/": {
+      "post": {
+        "summary": "POST login",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "POST logout",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          }
+        },
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "refresh_token"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Workspace_invitations": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Database column: id",
+            "example": 123
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Database column: created_at"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Database column: updated_at"
+          },
+          "deleted_at": {
+            "type": "string",
+            "description": "Database column: deleted_at"
+          },
+          "email": {
+            "type": "string",
+            "description": "Database column: email",
+            "example": "sample_email"
+          },
+          "role": {
+            "type": "string",
+            "description": "Database column: role",
+            "example": "sample_role"
+          },
+          "token": {
+            "type": "string",
+            "description": "Database column: token",
+            "example": "sample_token"
+          },
+          "status": {
+            "type": "string",
+            "description": "Database column: status",
+            "example": "sample_status"
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "Database column: expires_at"
+          },
+          "accepted_at": {
+            "type": "string",
+            "description": "Database column: accepted_at"
+          },
+          "rejected_at": {
+            "type": "string",
+            "description": "Database column: rejected_at"
+          },
+          "workspace_id": {
+            "type": "number",
+            "description": "Database column: workspace_id"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "email",
+          "role",
+          "token",
+          "status",
+          "expires_at",
+          "workspace_id"
+        ]
+      },
+      "Workspace_members": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Database column: id",
+            "example": 123
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Database column: created_at"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Database column: updated_at"
+          },
+          "deleted_at": {
+            "type": "string",
+            "description": "Database column: deleted_at"
+          },
+          "workspace_id": {
+            "type": "number",
+            "description": "Database column: workspace_id"
+          },
+          "user_id": {
+            "type": "number",
+            "description": "Database column: user_id"
+          },
+          "role": {
+            "type": "string",
+            "description": "Database column: role",
+            "example": "sample_role"
+          }
+        },
+        "required": [
+          "id",
+          "updated_at",
+          "workspace_id",
+          "user_id"
+        ]
+      },
+      "Refresh_token": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Database column: id",
+            "example": 123
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Database column: created_at"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Database column: updated_at"
+          },
+          "deleted_at": {
+            "type": "string",
+            "description": "Database column: deleted_at"
+          },
+          "user_id": {
+            "type": "number",
+            "description": "Database column: user_id"
+          },
+          "token_hash": {
+            "type": "string",
+            "description": "Database column: token_hash"
+          },
+          "expires_at": {
+            "type": "string",
+            "description": "Database column: expires_at"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "user_id",
+          "token_hash",
+          "expires_at"
+        ]
+      },
+      "Workspaces": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Database column: id"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Database column: created_at"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Database column: updated_at"
+          },
+          "deleted_at": {
+            "type": "string",
+            "description": "Database column: deleted_at"
+          },
+          "name": {
+            "type": "string",
+            "description": "Database column: name",
+            "example": "sample_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Database column: description"
+          },
+          "owner_id": {
+            "type": "number",
+            "description": "Database column: owner_id"
+          },
+          "status": {
+            "type": "string",
+            "description": "Database column: status",
+            "example": "sample_status"
+          },
+          "settings": {
+            "type": "object",
+            "description": "Database column: settings",
+            "properties": {}
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "owner_id"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Database column: id",
+            "example": 123
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Database column: created_at"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Database column: updated_at"
+          },
+          "deleted_at": {
+            "type": "string",
+            "description": "Database column: deleted_at"
+          },
+          "name": {
+            "type": "string",
+            "description": "Database column: name"
+          },
+          "email": {
+            "type": "string",
+            "description": "Database column: email"
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "name",
+          "email"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
