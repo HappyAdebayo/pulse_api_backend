@@ -53,8 +53,8 @@ class WorkspaceServiceBase {
     return { status: 200, message: "Workspace fetched succesfully", data: { workspace: workspaceList } };
   }
 
-  
-  async store(input, user) {
+
+   async store(input, user) {
     foundWorkspace = await db.Workspaces.findOne({
       where: { [db.Sequelize.Op.and]: [ { name: input.body.name }, { owner_id: user.id } ] },
     });
