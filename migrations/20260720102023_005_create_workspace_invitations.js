@@ -7,7 +7,7 @@ module.exports = {
       id: {
         type: Sequelize.UUID,
                 primaryKey: true,
-                autoIncrement: true,
+                // autoIncrement: true,
                 unique: true,
                 allowNull: false,
       },
@@ -43,7 +43,7 @@ module.exports = {
                 allowNull: true,
       },
       rejected_at: {
-        type: Sequelize.TEXT,
+        type: Sequelize.DATE,
                 allowNull: true,
       },
       createdAt: {

@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.UUID,
                 primaryKey: true,
                 allowNull: false,
-                defaultValue: 'gen_random_uuid(',
+                // defaultValue: 'gen_random_uuid(',
       },
       deleted_at: {
         type: Sequelize.DATE,
