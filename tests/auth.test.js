@@ -5,7 +5,7 @@ describe("Authentication API", () =>{
    
      test("should create a new user", async () => {
     const response = await request(app)
-    .post("api/auth")
+    .post("api/auth/")
     .send({
         name: "Test User",
         email:"test@example.com",
@@ -22,7 +22,7 @@ describe("Authentication API", () =>{
 
 test("should login user and return tokens", async () =>{
     const response = await request(app)
-    .post("/api/auth/signup")
+    .post("/api/auth/login")
     .send({
         email:"test@example.com",
         password:"password123"
