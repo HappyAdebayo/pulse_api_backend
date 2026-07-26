@@ -5,7 +5,7 @@ describe("Authentication API", () =>{
    
      test("should create a new user", async () => {
     const response = await request(app)
-    .post("api/auth/")
+    .post("/api/auth/")
     .send({
         name: "Test User",
         email:"test@example.com",
@@ -14,7 +14,7 @@ describe("Authentication API", () =>{
 
     expect(response.statusCode).toBe(201);
 
-    expect(response.body.message).toBe("User create successfully");
+    expect(response.body.message).toBe("User created successfully");
 })
 
 })
