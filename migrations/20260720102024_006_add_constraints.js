@@ -36,7 +36,7 @@ module.exports = {
       onUpdate: 'CASCADE'
     });
     await queryInterface.addColumn('workspace_members', 'workspace_id', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       allowNull: false,
       unique: false
     });
