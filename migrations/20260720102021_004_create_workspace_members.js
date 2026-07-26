@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('workspace_members', {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
                 primaryKey: true,
                 allowNull: false,
       },

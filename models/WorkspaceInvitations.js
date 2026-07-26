@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const WorkspaceInvitations = sequelize.define('WorkspaceInvitations', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
       autoIncrement: true,
       unique: true,

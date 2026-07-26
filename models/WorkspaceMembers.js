@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const WorkspaceMembers = sequelize.define('WorkspaceMembers', {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
     },

@@ -399,9 +399,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "description": "Database column: id",
-            "example": 123
+            "type": "string",
+            "description": "Database column: id"
           },
           "created_at": {
             "type": "string",
@@ -448,7 +447,7 @@
             "description": "Database column: rejected_at"
           },
           "workspace_id": {
-            "type": "number",
+            "type": "string",
             "description": "Database column: workspace_id"
           }
         },
@@ -468,9 +467,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "description": "Database column: id",
-            "example": 123
+            "type": "string",
+            "description": "Database column: id"
           },
           "created_at": {
             "type": "string",
@@ -485,7 +483,7 @@
             "description": "Database column: deleted_at"
           },
           "workspace_id": {
-            "type": "number",
+            "type": "string",
             "description": "Database column: workspace_id"
           },
           "user_id": {

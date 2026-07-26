@@ -10,7 +10,7 @@ const { generateSecurityCode } = require('../utils/security/codeGenerator');
 
 class WorkspaceServiceBase {
   async reject_invitation(input, user) {
-    const foundInvitation = await db.WorkspaceInvitations.findOne({
+    foundInvitation = await db.WorkspaceInvitations.findOne({
       where: { [db.Sequelize.Op.and]: [ { token: input.params.tokenid }, { status: "pending" } ] },
     });
 
@@ -30,6 +30,7 @@ class WorkspaceServiceBase {
       }, {
         where: { [db.Sequelize.Op.and]: [ { token: input.params.tokenid }, { email: user.email } ] },
       });
+
       throw { status: 409, message: "Invitation has expired"};
     }
 
@@ -39,24 +40,21 @@ class WorkspaceServiceBase {
     }, {
       where: { [db.Sequelize.Op.and]: [ { email: user.email }, { token: input.params.tokenid }, { id: foundInvitation.id } ] },
     });
+
     return { status: 200, message: "User rejected invitation", data: {} };
   }
 
   async index(user) {
-    const workspaceList = await db.WorkspaceMembers.findAll({
-      where: { owner_id: user.id },
-      include: [
-        {
-          model: db.Workspaces
-        }
-      ]
+    workspaceList = await db.WorkspaceMembers.findAll({
+      include: [db.Workspaces],
+      where: { user_id: user.id }
     });
 
-    return { status: 200, message: "Workspace fetched succesfully", data: { workspace: { data: workspaceList } } };
+    return { status: 200, message: "Workspace fetched succesfully", data: { workspace: workspaceList } };
   }
 
   async store(input, user) {
-    const foundWorkspace = await db.Workspaces.findOne({
+    foundWorkspace = await db.Workspaces.findOne({
       where: { [db.Sequelize.Op.and]: [ { name: input.body.name }, { owner_id: user.id } ] },
     });
 
@@ -64,7 +62,7 @@ class WorkspaceServiceBase {
       throw { status: 422, message: "Workspace already exist"};
     }
 
-    const newWorkspace = await db.Workspaces.create({
+    newWorkspace = await db.Workspaces.create({
       name: input.body.name,
       owner_id: user.id,
       description: input.body.description
@@ -80,7 +78,7 @@ class WorkspaceServiceBase {
   }
 
   async delete_workspace(input, user) {
-    const foundWorkspace = await db.Workspaces.findOne({
+    foundWorkspace = await db.Workspaces.findOne({
       where: { id: input.params.id },
     });
 
@@ -117,12 +115,15 @@ class WorkspaceServiceBase {
   }
 
   async accept_invitation(input, user) {
-    const foundInvitation = await db.WorkspaceInvitations.findOne({
+    foundInvitation = await db.WorkspaceInvitations.findOne({
+      include: [db.Workspaces],
       where: { [db.Sequelize.Op.and]: [ { token: input.params.tokenid }, { status: "pending" } ] },
     });
 
     if (!foundInvitation) {
       throw { status: 409, message: "invitation does not exist"};
+    } else if (foundInvitation.status == "rejected") {
+      throw { status: 409, message: "Invitation is already rejected"};
     }
 
     const currentDate = new Date();
@@ -133,12 +134,13 @@ class WorkspaceServiceBase {
       }, {
         where: { token: input.params.tokenid },
       });
-      throw { status: 400, message: "Bad Request"};
+
+      throw { status: 400, message: "invitations expired"};
     } else if (foundInvitation.email != user.email) {
       throw { status: 403, message: "this invitation does not belong to you"};
     }
 
-    const existingmemeber = await db.WorkspaceMembers.findOne({
+    existingmemeber = await db.WorkspaceMembers.findOne({
       where: { [db.Sequelize.Op.and]: [ { user_id: user.id }, { workspace_id: foundInvitation.workspace_id } ] },
     });
 
@@ -161,6 +163,7 @@ class WorkspaceServiceBase {
         where: { [db.Sequelize.Op.and]: [ { token: input.params.tokenid }, { email: foundInvitation.email } ] },
         transaction: transaction
       });
+
       await transaction.commit();
     } catch (transactionError) {
       await transaction.rollback();
@@ -171,7 +174,7 @@ class WorkspaceServiceBase {
   }
 
   async transfer_ownership(input, user) {
-    const foundWorkspace = await db.Workspaces.findOne({
+    foundWorkspace = await db.Workspaces.findOne({
       where: { id: input.params.workspaceid , owner_id: user.id  },
     });
 
@@ -179,7 +182,7 @@ class WorkspaceServiceBase {
       throw { status: 404, message: "Workspace not found"};
     }
 
-    const newOwner = await db.WorkspaceMembers.findOne({
+    newOwner = await db.WorkspaceMembers.findOne({
       where: { [db.Sequelize.Op.and]: [ { user_id: input.body.user_id }, { workspace_id: input.params.workspaceid } ] },
     });
 
@@ -199,18 +202,21 @@ class WorkspaceServiceBase {
         where: { [db.Sequelize.Op.and]: [ { workspace_id: input.params.workspaceid }, { user_id: user.id } ] },
         transaction: updateTransaction
       });
+
       await db.WorkspaceMembers.update({
         role: "owner"
       }, {
-        where: { [db.Sequelize.Op.and]: [ { user_id: input.body.user_id }, { workspace_id: input.params.workspaceid } ] },
+        where: { [db.Sequelize.Op.and]: [ { user_id: input.body.user_id }, { workspace_id: input.params.workspaceid }, { role: { [db.Sequelize.Op.ne]: "member" } } ] },
         transaction: updateTransaction
       });
+
       await db.Workspaces.update({
         owner_id: input.body.user_id
       }, {
         where: { id: input.params.workspaceid },
         transaction: updateTransaction
       });
+
       await updateTransaction.commit();
     } catch (transactionError) {
       await updateTransaction.rollback();
@@ -221,12 +227,7 @@ class WorkspaceServiceBase {
   }
 
   async create_invitation(input, user) {
-    const foundMember = await db.Workspaces.findOne({
-      include: [
-        {
-          model: db.User
-        }
-      ],
+    foundMember = await db.User.findOne({
       where: { email: input.body.email },
     });
 
@@ -234,7 +235,7 @@ class WorkspaceServiceBase {
       throw { status: 404, message: "Users not found"};
     }
 
-    const existingMember = await db.WorkspaceMembers.findOne({
+    existingMember = await db.WorkspaceMembers.findOne({
       where: { [db.Sequelize.Op.and]: [ { workspace_id: input.params.workspaceid }, { user_id: foundMember.id } ] },
     });
 
@@ -242,7 +243,7 @@ class WorkspaceServiceBase {
       throw { status: 400, message: "User already belongs to this workspace"};
     }
 
-    const foundOwner = await db.Workspaces.findOne({
+    foundOwner = await db.Workspaces.findOne({
       where: { [db.Sequelize.Op.and]: [ { owner_id: user.id }, { id: input.params.workspaceid } ] },
     });
 

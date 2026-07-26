@@ -69,7 +69,7 @@ exports.transfer_ownership = (req, res, next) => {
 
 const create_invitationSchema = Joi.object({
   "email": Joi.string().email().required(),
-  "role": Joi.string().email().required().valid("owner", "admin", "developer", "member", "viewer")
+  "role": Joi.string().required().valid("owner", "admin", "developer", "member", "viewer")
 }).unknown(true);
 
 exports.create_invitation = (req, res, next) => {

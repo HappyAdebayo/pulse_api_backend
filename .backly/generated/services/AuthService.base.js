@@ -18,7 +18,7 @@ class AuthServiceBase {
 
     const hashedToken = crypto.createHash('sha256').update(String(input.body.refresh_token)).digest('hex');
 
-    const foundRefreshToken = await db.RefreshToken.findOne({
+    foundRefreshToken = await db.RefreshToken.findOne({
       where: { token_hash: hashedToken },
     });
 
@@ -32,7 +32,7 @@ class AuthServiceBase {
       throw { status: 403, message: "Invalid refresh token"};
     }
 
-    const founduser = await db.User.findOne({
+    founduser = await db.User.findOne({
       where: { id: foundRefreshToken.user_id },
     });
 
@@ -50,11 +50,12 @@ class AuthServiceBase {
     }, {
       where: { user_id: founduser.id },
     });
+
     return { status: 200, message: "Token refreshed sucessfully", data: { accessToken, refreshToken } };
   }
 
   async sign_up(input) {
-    const foundUser = await db.User.findOne({
+    foundUser = await db.User.findOne({
       where: { email: input.body.email },
     });
 
@@ -64,7 +65,7 @@ class AuthServiceBase {
 
     const hashedPassword = await bcrypt.hash(input.body.password, 10);
 
-    const newUser = await db.User.create({
+    newUser = await db.User.create({
       name: input.body.name,
       email: input.body.email,
       password: hashedPassword
@@ -74,7 +75,7 @@ class AuthServiceBase {
   }
 
   async login(input) {
-    const foundUser = await db.User.findOne({
+    foundUser = await db.User.findOne({
       where: { email: input.body.email },
     });
 
@@ -84,7 +85,7 @@ class AuthServiceBase {
       const isPasswordValid = await bcrypt.compare(input.body.password, foundUser.password);
 
       if (isPasswordValid) {
-        const doesTokenExist = await db.RefreshToken.findOne({
+        doesTokenExist = await db.RefreshToken.findOne({
           where: { user_id: foundUser.id },
         });
 
@@ -127,7 +128,7 @@ class AuthServiceBase {
 
     const hashedRefrehedToken = crypto.createHash('sha256').update(String(input.body.refresh_token)).digest('hex');
 
-    const foundRefreshedToken = await db.RefreshToken.findOne({
+    foundRefreshedToken = await db.RefreshToken.findOne({
       where: { token_hash: hashedRefrehedToken },
     });
 
