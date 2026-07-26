@@ -28,6 +28,8 @@ jobs:
           POSTGRES_DB: pulse_api_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          JWT_TOKEN: Adeyanjuhappyadebayo
+          REFRESH_TOKEN: alibabacofoundation
         ports:
           - 5432:5432
 
