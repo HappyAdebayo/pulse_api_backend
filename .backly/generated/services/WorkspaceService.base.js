@@ -207,7 +207,7 @@ class WorkspaceServiceBase {
       await db.WorkspaceMembers.update({
         role: "owner"
       }, {
-        where: { [db.Sequelize.Op.and]: [ { user_id: input.body.user_id }, { workspace_id: input.params.workspaceid }, { role: { [db.Sequelize.Op.ne]: "member" } } ] },
+        where: { [db.Sequelize.Op.and]: [ { user_id: input.body.user_id }, { workspace_id: input.params.workspaceid } ] },
         transaction: updateTransaction
       });
 

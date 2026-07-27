@@ -43,7 +43,7 @@ exports.accept_invitation = (req, res, next) => {
 };
 
 const transfer_ownershipSchema = Joi.object({
-  "user_id": Joi.string().required()
+  "user_id": Joi.number().integer().required()
 }).unknown(true);
 
 exports.transfer_ownership = (req, res, next) => {
