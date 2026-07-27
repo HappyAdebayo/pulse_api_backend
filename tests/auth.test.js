@@ -6,12 +6,11 @@ describe("Authentication API", () =>{
    
      test("should create a new user", async () => {
 
-      const email = `test${Date.now()}@example.com`;
     const response = await request(app)
     .post("/api/auth/")
     .send({
         name: "Test User",
-        email,
+        email:"test@example.com",
         password: "password123"
     });
 
