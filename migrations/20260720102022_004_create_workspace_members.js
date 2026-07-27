@@ -3,13 +3,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-
+    
     await queryInterface.createTable('workspace_members', {
       id: {
         type: Sequelize.UUID,
                 primaryKey: true,
                 allowNull: false,
-                defaultValue: sequelize.literal('gen_random_uuid()')
+                defaultValue: Sequelize.literal('gen_random_uuid()')
       },
       deleted_at: {
         type: Sequelize.DATE,

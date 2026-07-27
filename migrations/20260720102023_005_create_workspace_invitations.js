@@ -10,6 +10,7 @@ module.exports = {
                 // autoIncrement: true,
                 unique: true,
                 allowNull: false,
+                defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       deleted_at: {
         type: Sequelize.DATE,
