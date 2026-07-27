@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
+      defaultValue: sequelize.literal('gen_random_uuid()')
     },
     deleted_at: {
       type: DataTypes.DATE,

@@ -1,10 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
+
+  const { Sequelize } = require('sequelize');
+  
   const Workspaces = sequelize.define('Workspaces', {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       allowNull: false,
-      defaultValue: 'gen_random_uuid(',
+      defaultValue: Sequelize.literal('gen_random_uuid()'),
     },
     deleted_at: {
       type: DataTypes.DATE,

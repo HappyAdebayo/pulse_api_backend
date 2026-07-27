@@ -36,9 +36,9 @@ class AuthServiceBase {
       where: { id: foundRefreshToken.user_id },
     });
 
-    const accessToken = jwt.sign({ id: founduser }, process.env.JWT_TOKEN, { expiresIn: '1h' });
+    const accessToken = jwt.sign({ userId: founduser.id }, process.env.JWT_TOKEN, { expiresIn: '1h' });
 
-    const refreshToken = jwt.sign({ id: founduser }, process.env.REFRESH_TOKEN, { expiresIn: '1h' });
+    const refreshToken = jwt.sign({ id: founduser.id }, process.env.REFRESH_TOKEN, { expiresIn: '1h' });
 
     const hashedRefreshToken = crypto.createHash('sha256').update(String(refreshToken)).digest('hex');
 
@@ -96,9 +96,9 @@ class AuthServiceBase {
 
         }
 
-        const accessToken = jwt.sign({ userId: foundUser }, process.env.JWT_TOKEN, { expiresIn: '1h' });
+        const accessToken = jwt.sign({ id: foundUser.id}, process.env.JWT_TOKEN, { expiresIn: '1h' });
 
-        const rerfreshToken = jwt.sign({ id: foundUser }, process.env.REFRESH_TOKEN, { expiresIn: '1h' });
+        const rerfreshToken = jwt.sign({ id: foundUser.id }, process.env.REFRESH_TOKEN, { expiresIn: '1h' });
 
         const hashedRefreshToken = crypto.createHash('sha256').update(String(rerfreshToken)).digest('hex');
 

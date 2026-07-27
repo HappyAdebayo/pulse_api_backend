@@ -5,11 +5,13 @@ const db = require("../models");
 describe("Authentication API", () =>{
    
      test("should create a new user", async () => {
+
+      const email = `test${Date.now()}@example.com`;
     const response = await request(app)
     .post("/api/auth/")
     .send({
         name: "Test User",
-        email:"test@example.com",
+        email,
         password: "password123"
     });
 

@@ -68,13 +68,13 @@ class WorkspaceServiceBase {
       description: input.body.description
     });
 
-    await db.WorkspaceMembers.create({
+    const workspaces=await db.WorkspaceMembers.create({
       role: "owner",
       user_id: user.id,
       workspace_id: newWorkspace.id
     });
 
-    return { status: 201, message: "Workspace created", data: {} };
+    return { status: 201, message: "Workspace created", data: {workspaces} };
   }
 
   async delete_workspace(input, user) {
