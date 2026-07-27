@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     rejected_at: {
-      type: DataTypes.TEXT,
+      type: DataTypes.DATE,
       allowNull: true,
     },
     workspace_id: {

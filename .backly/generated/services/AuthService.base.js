@@ -96,7 +96,10 @@ class AuthServiceBase {
 
         }
 
-        const accessToken = jwt.sign({ id: foundUser.id}, process.env.JWT_TOKEN, { expiresIn: '1h' });
+        const accessToken = jwt.sign({ 
+          id: foundUser.id,
+          email:foundUser.email
+        }, process.env.JWT_TOKEN, { expiresIn: '1h' });
 
         const rerfreshToken = jwt.sign({ id: foundUser.id }, process.env.REFRESH_TOKEN, { expiresIn: '1h' });
 

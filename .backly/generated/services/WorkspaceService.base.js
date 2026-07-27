@@ -115,6 +115,7 @@ class WorkspaceServiceBase {
   }
 
   async accept_invitation(input, user) {
+    
     foundInvitation = await db.WorkspaceInvitations.findOne({
       include: [db.Workspaces],
       where: { [db.Sequelize.Op.and]: [ { token: input.params.tokenid }, { status: "pending" } ] },
