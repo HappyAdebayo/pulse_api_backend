@@ -3,7 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-  const { Sequelize } = require('sequelize');
 
     await queryInterface.createTable('workspaces', {
       id: {
